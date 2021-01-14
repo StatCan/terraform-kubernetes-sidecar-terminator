@@ -25,7 +25,7 @@ module "kubectl_sidecar_terminator" {
   source = "github.com/canada-ca-terraform-modules/terraform-kubernetes-sidecar-terminator?ref=20190909.1"
 
   dependencies = [
-    "${module.namespace_istio_system.depended_on}",
+    module.namespace_istio_system.depended_on,
   ]
 
   kubectl_service_account = "tiller"
