@@ -22,28 +22,27 @@ The following security controls can be met through configuration of this templat
 
 ```terraform
 module "kubectl_sidecar_terminator" {
-  source = "github.com/canada-ca-terraform-modules/terraform-kubernetes-sidecar-terminator?ref=20190909.1"
+  source = "github.com/canada-ca-terraform-modules/terraform-kubernetes-sidecar-terminator?ref=v2.0.0"
 
-  dependencies = [
-    module.namespace_istio_system.depended_on,
+  depends_on = [
+    module.namespace_kube_system,
   ]
 
-  kubectl_service_account = "tiller"
-  kubectl_namespace = "kube-syste
+  kubectl_namespace = module.namespace_kube_system.name
 }
 ```
 
 ## Variables Values
 
-| Name                    | Type   | Required | Value                                                  |
-| ----------------------- | ------ | -------- | ------------------------------------------------------ |
-| dependencies            | list   | yes      | Dependency name refering to namespace module           |
-| kubectl_service_account | list   | yes      | The service account for kubectl to use                 |
-| kubectl_namespace       | list   | yes      | The namespace kubectl will install the manifests under |
+| Name                    | Type | Required | Value                                                  |
+| ----------------------- | ---- | -------- | ------------------------------------------------------ |
+| kubectl_namespace       | list | yes      | The namespace kubectl will install the manifests under |
 
 ## History
 
-| Date     | Release    | Change                                                     |
-| -------- | ---------- | ---------------------------------------------------------- |
-| 20190729 | 20190729.1 | Improvements to documentation and formatting               |
-| 20190909 | 20190909.1 | 1st release                                                |
+| Date     | Release    | Change                                        |
+| -------- | ---------- | --------------------------------------------- |
+| 20190729 | 20190729.1 | Improvements to documentation and formatting  |
+| 20190909 | 20190909.1 | 1st release                                   |
+| 20190909 | v1.0.0     | Move to SEMVER for versioning                 |
+| 20210825 | v2.0.0     | Update module for Terraform v0.13 and cleanup |
